@@ -25,6 +25,21 @@ It is assumed that all commands are run as `root`.
    mkdir -p /etc/cron.daily.disabled
    dpkg-divert --local --rename --divert /etc/cron.daily.disabled/google-chrome /etc/cron.daily/google-chrome
    ```
+   There's an alternative method to prevent packages from installing new sources
+   under  `/etc/apt/sources.list.d`: one needs to add a file to
+   `/etc/dpkg/dpkg.cfg.d/` (named, let's say, `no-new-sources`), with the
+   following contents:
+   ```
+   #
+   # /etc/dpkg/dpkg.cfg.d/no-new-sources
+   #
+   # vim:ft=conf:
+   #
+   # Prevent packages from installing new sources under /etc/apt/sources.list.d
+   #
+
+   path-exclude=/etc/apt/sources.list.d/*
+   ```
 1. Install the package as usual:
    ```bash
    dpkg -i google-chrome-stable_current_amd64.deb
